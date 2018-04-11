@@ -1,0 +1,183 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.bundle.min.js" integrity="sha384-lZmvU/TzxoIQIOD9yQDEpvxp6wEU32Fy0ckUgOH4EIlMOCdR823rg4+3gWRwnX1M" crossorigin="anonymous"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet">
+<style type="text/css">
+h3{
+  text-align: center;
+}
+thead{
+  color: grey;
+} 
+.colk{
+  margin-left: 7%;
+  padding: 0;
+  border-style:solid; 
+  border-width:thin;
+   border-color: lightgrey;
+}
+</style>
+
+<script type="text/javascript">
+$(function() {
+
+ $.getJSON("https://api.myjson.com/bins/binr7", function(data) {
+        var data = data; 
+       // console.log(data.categories);
+       //console.log(data.graph);
+        Highcharts.chart('container', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Customer Base'
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                categories: data.categories,
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Count'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+               pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            
+            series: [
+                         {
+                name: data.graph[0].name,
+                data: data.graph[0].data
+            }, {
+                name: data.graph[1].name,
+                data: data.graph[1].data
+            }]
+        });
+      });
+
+
+  $.ajax({
+    url: 'https://api.myjson.com/bins/11mbor',
+    complete: function(json) {
+      data = JSON.parse(json.responseText);
+     // console.log(data.insights[0].name);
+      //console.log(data.insights[0].y);
+      var chart = new Highcharts.Chart({
+        chart: {
+          type: 'pie',
+          renderTo: 'container1'
+        },
+        title: {
+          text: "Population of Cities"
+        },
+        tooltip: {
+          pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y}%</b><br/>'
+        },
+       plotOptions: {
+         pie: {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        dataLabels: {
+        enabled: true,
+        format: '<b>{point.name}</b>',
+        style: {
+          color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+           }
+         }
+       }
+      },
+      series: [{
+         name: 'insights',
+        colorByPoint: true,
+        innerSize: '60%',
+        data: data.insights,
+        
+        }]
+
+      });
+
+    },
+  });
+});
+
+</script>
+
+</head>
+
+<body>
+  <div class="row">
+  <div class="col-sm-2" style="background-color: #F4F1F1;">
+    <p>Submitted By: Rahul Yadav</p>
+    Contact No: 7049570963
+  </div>
+  <div class="col-sm-10">
+  <div>
+    <br><br>
+  </div>
+<div class="row">
+  <div class="col-sm-3 colk">
+   <p style="background-color: #F4F1F1; padding-left: 3%;">CUSTOMER BASE (&#63;)</p>
+    <h3>28.75K</h3>
+  </div>
+  <div class=" col-sm-3  colk">
+    <p style="background-color: #F4F1F1; padding-left: 3%;">AVG. TICKET SIZE (&#63;)</p>
+    <h3> &#x20b9; 351.10 </h3>
+  </div>
+  <div class=" col-sm-3 colk">
+    <p style="background-color: #F4F1F1; padding-left: 3%;">SALES (&#63;)</p>
+    <h3> &#x20b9; 1.93 Cr</h3>
+  </div>
+  <br>
+</div>
+
+<div class="row">
+<div class="col col-sm-7" id="container" ></div>
+<div  class="col col-sm-5 " id="container1" ></div>
+</div>
+<br>
+<div>
+   <div class="table-responsive">          
+  <table class="table">
+    <thead>
+      <tr>
+        <td><strong>Campaign</strong></td>
+        <td><strong>Estimated Reach</strong></td>
+        <td><strong>Redemptions</strong></td>
+        <td><strong>Sales</strong></td>
+        <td><strong>Spends</strong></td>
+        <td><strong>ROAS</strong></td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>FOODPANDA FLAT200</strong><br>
+          <sub>  Flat &#x20b9; 200 off on shopping of 1000 or more</sub></td>
+        <td><strong>40.00 K</strong></td>
+        <td><strong>2480</strong></td>
+        <td><strong>25.00 L</strong></td>
+        <td><strong>1.50 L</strong></td>
+        <td><strong>614 %</strong></td>
+      </strong>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+</div>
+</body>
+</html>
